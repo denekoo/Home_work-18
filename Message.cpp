@@ -1,7 +1,4 @@
 #include "Message.h"
-#include <string>
-#include <fstream>
-#include <iostream>
 
 
 std::fstream& operator >>(std::fstream& is, Message& obj)

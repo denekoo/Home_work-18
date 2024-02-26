@@ -1,5 +1,29 @@
-﻿#include "User.cpp"
-#include "Message.cpp"
+﻿//#include <string>
+#include <filesystem>
+#include <fstream>
+#include "User.h"
+#include "Message.h"
+
+// if not compile on g++ use key  -std=c++17
+
+namespace fs = std::filesystem;
+
+void show_perms(fs::perms p)
+{
+  std::cout << ((p & fs::perms::owner_read)   != fs::perms::none ? "r" : "-")
+			<< ((p & fs::perms::owner_write)  != fs::perms::none ? "w" : "-")
+			<< ((p & fs::perms::owner_exec)   != fs::perms::none ? "x" : "-")
+			<< ((p & fs::perms::group_read)   != fs::perms::none ? "r" : "-")
+			<< ((p & fs::perms::group_write)  != fs::perms::none ? "w" : "-")
+			<< ((p & fs::perms::group_exec)   != fs::perms::none ? "x" : "-")
+			<< ((p & fs::perms::others_read)  != fs::perms::none ? "r" : "-")
+			<< ((p & fs::perms::others_write) != fs::perms::none ? "w" : "-")
+			<< ((p & fs::perms::others_exec)  != fs::perms::none ? "x" : "-")
+			<< "\n";
+}
+
+
+
 
 
 
@@ -24,27 +48,17 @@ int main() {
 	{
 		std::cout << "Could not open file users.txt !" << '\n';
 		return 0;
-
 	}
+
+	show_perms(fs::status("users.txt").permissions());
+	// Установим права на файл:
+	fs::permissions("users.txt", fs::perms::owner_all);
+
+	show_perms(fs::status("users.txt").permissions());
+
 }
-//
-//#include <iostream>
-//#include <fstream>
-//#include <string>
-//
-//class User {
-//public:
-//    std::string _name;
-//    std::string _login;
-//    std::string _pass;
-//};
-//
-//class Message {
-//public:
-//    std::string _text;
-//    std::string _sender;
-//    std::string _receiver;
-//};
+
+
 //
 //int main() {
 //    User user{ "John Doe", "john", "password123" };

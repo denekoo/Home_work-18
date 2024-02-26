@@ -1,4 +1,8 @@
 #pragma once
+#include <string>
+#include <fstream>
+#include <iostream>
+
 class User {
     std::string _name;
     std::string _login;
