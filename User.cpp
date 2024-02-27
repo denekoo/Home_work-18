@@ -20,7 +20,6 @@ void User::read_from_file(std::string& file_name)
 	std::ifstream file(file_name, std::ios::in | std::ios::binary);
 		if(file.is_open())
 		{ 
-			
 			std::getline(file, m_name,  '\0');
 			std::getline(file, m_login, '\0');
 			std::getline(file, m_pass,  '\0');

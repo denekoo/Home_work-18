@@ -56,22 +56,27 @@ int main() {
 	std::string name_msg_file = "messages.txt";
 	Message msg("telegram", "Alex", "Eustace");
 
+	// Создаем файлы пользователя и сообщений
 	init_file(name_user_file);
 	init_file(name_msg_file);
 
+	// Запись полей класса в файл
 		user.write_to_file(name_user_file);
 		msg.write_to_file(name_msg_file);
 		
+		// Для чистоты эксперимента очистим поля классов 
 		user.clear_user();
 		msg.clear_message();
 
+		// Читаем файл
 		user.read_from_file(name_user_file);
 		msg.read_from_file(name_msg_file);
 		
+		// Вывод сообщений
 		user.show_user();
 		msg.show_message();
 
-
+		// Установим права на файл
 		std::cout << std::endl;
 		std::cout << "Permissions for" << name_msg_file << " :" << std::endl;
 		set_perms(name_msg_file);
