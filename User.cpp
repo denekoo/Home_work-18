@@ -1,20 +1,54 @@
 #include "User.h"
 
-
-
-std::fstream& operator >>(std::fstream& is, User& obj)
+void User::show_user()
 {
-	is >> obj._name;
-	is >> obj._login;
-	is >> obj._pass;
-	return is;
+	std::cout << "User name:     " << m_name  << std::endl;
+	std::cout << "User login:    " << m_login << std::endl;
+	std::cout << "User password: " << m_pass  << std::endl;
 }
-std::ostream& operator <<(std::ostream& os, const User& obj)
+void User::clear_user()
 {
-	os << obj._name;
-	os << ' ';
-	os << obj._login;
-	os << ' ';
-	os << obj._pass;
-	return os;
+	m_name = "";
+	m_login = "";
+	m_pass = "";
+}
+
+
+
+void User::read_from_file(std::string& file_name)
+{
+	std::ifstream file(file_name, std::ios::in | std::ios::binary);
+		if(file.is_open())
+		{ 
+			
+			std::getline(file, m_name,  '\0');
+			std::getline(file, m_login, '\0');
+			std::getline(file, m_pass,  '\0');
+			file.close();
+		}
+		else
+		{
+			std::cout << "Could not open file!" << std::endl;
+		}
+}
+
+void User::write_to_file(std::string& file_name)
+{
+	std::ofstream file(file_name, std::ios::out | std::ios::binary | std::ios::trunc);
+	if (file.is_open())
+	{
+		file.write(m_name.data(), m_name.size());
+		file.put('\0');
+
+		file.write(m_login.data(), m_login.size());
+		file.put('\0');
+
+		file.write(m_pass.data(),  m_pass.size());
+		file.put('\n');
+		file.close();
+	}
+	else
+	{
+		std::cout << "Could not open file to write!" << std::endl;
+	}
 }

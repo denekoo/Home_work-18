@@ -1,0 +1,48 @@
+//void User::read_from_file(std::string& file_name, User user)
+//{
+//	
+//	std::fstream file(file_name, std::ios::in | std::ios::binary);
+//	file.seekg(0, std::ios_base::beg);
+//	file >> user;
+//}
+//  // not working
+
+//void User::write_to_file(std::string& file_name, User user)
+//{
+//	std::fstream file(file_name,
+//		std::ios::in | std::ios::out | std::ios::trunc | std::ios::binary);
+//	//std::ofstream file(file_name, std::ios::out | std::ios::binary | std::ios::trunc);
+//	if (file.is_open())
+//	{
+//		file << user << std::endl;
+//		file.close();
+//	}
+//	else
+//	{
+//		std::cout << "Could not open file and write user`s data!" << std::endl;
+//	}
+//}
+
+
+	friend std::fstream& operator >>(std::fstream& is, User& obj);
+	friend std::ostream& operator <<(std::ostream& os, const User& obj);
+
+
+
+std::fstream& operator >>(std::fstream& is, User& obj)
+{
+	is >> obj.m_name;
+	is >> obj.m_login;
+	is >> obj.m_pass;
+	return is;
+}
+std::ostream& operator <<(std::ostream& os, const User& obj)
+{
+	os << obj.m_name;
+	os << ' ';
+	os << obj.m_login;
+	os << ' ';
+	os << obj.m_pass;
+	return os;
+}
+

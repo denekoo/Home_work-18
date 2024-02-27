@@ -1,19 +1,54 @@
 #include "Message.h"
 
-
-std::fstream& operator >>(std::fstream& is, Message& obj)
+void Message::show_message()
 {
-	is >> obj._text;
-	is >> obj._sender;
-	is >> obj._receiver;
-	return is;
+	std::cout << "Text message:      " << m_text     << std::endl;
+	std::cout << "Message sender:    " << m_sender   << std::endl;
+	std::cout << "Message receiver : " << m_receiver << std::endl;
 }
-std::ostream& operator <<(std::ostream& os, const Message& obj)
+void Message::clear_message()
 {
-	os << obj._text;
-	os << ' ';
-	os << obj._sender;
-	os << ' ';
-	os << obj._receiver;
-	return os;
+	m_text = "";
+	m_sender = "";
+	m_receiver = "";
+}
+
+
+void Message::read_from_file(std::string& file_name)
+{
+	std::ifstream file(file_name, std::ios::in | std::ios::binary);
+	if (file.is_open())
+	{
+		std::getline(file, m_text, '\0');
+		std::getline(file, m_sender, '\0');
+		std::getline(file, m_receiver, '\0');
+		file.close();
+	}
+	else
+	{
+		std::cout << "Could not open file!" << std::endl;
+	}
+}
+
+void Message::write_to_file(std::string& file_name)
+{
+	std::ofstream file(file_name, std::ios::out | std::ios::binary | std::ios::trunc);
+	if (file.is_open())
+	{
+		file.write(m_text.data(), m_text.size());
+		file.put('\0');
+
+		file.write(m_sender.data(), m_sender.size());
+		file.put('\0');
+
+		file.write(m_receiver.data(), m_receiver.size());
+		file.put('\0');
+
+		file.close();
+	}
+	else
+	{
+		std::cout << "Could not open file to write!" << std::endl;
+	}
+
 }

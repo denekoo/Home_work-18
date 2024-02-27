@@ -4,15 +4,18 @@
 #include <iostream>
 
 class User {
-    std::string _name;
-    std::string _login;
-    std::string _pass;
+    std::string m_name;
+    std::string m_login;
+    std::string m_pass;
 
 
 public:
-	User(std::string name, std::string login, std::string pass) :_name(name), _login(login), _pass(pass) {}
+	User(std::string name, std::string login, std::string pass) :m_name(name), m_login(login), m_pass(pass) {}
+	
+	void clear_user();
+	void read_from_file(std::string& file_name);
+	void write_to_file(std::string& file_name);
 
-	friend std::fstream& operator >>(std::fstream& is, User& obj);
-	friend std::ostream& operator <<(std::ostream& os, const User& obj);
-
+	void show_user();
 };
+
