@@ -37,6 +37,15 @@ void set_perms(std::string& file_name)
 }
 
 
+void init_file( std::string& name)
+{
+	std::fstream file = std::fstream(name, std::ios::in | std::ios::out);
+	if (!file) {
+		file = std::fstream(name, std::ios::in | std::ios::out | std::ios::trunc);
+	}
+}
+
+
 int main() {
 
 	std::fstream user_file;
@@ -47,15 +56,14 @@ int main() {
 	std::string name_msg_file = "messages.txt";
 	Message msg("telegram", "Alex", "Eustace");
 
-	
+	init_file(name_user_file);
+	init_file(name_msg_file);
+
 		user.write_to_file(name_user_file);
 		msg.write_to_file(name_msg_file);
 		
 		user.clear_user();
 		msg.clear_message();
-
-		//user.show_user();
-		//msg.show_message();
 
 		user.read_from_file(name_user_file);
 		msg.read_from_file(name_msg_file);
